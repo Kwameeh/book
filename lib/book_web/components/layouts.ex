@@ -31,11 +31,15 @@ defmodule BookWeb.Layouts do
     default: nil,
     doc: "the current [scope](https://hexdocs.pm/phoenix/scopes.html)"
 
+  attr :current_user, :any,
+    default: nil,
+    doc: "the current authenticated user"
+
   slot :inner_block, required: true
 
   def app(assigns) do
     ~H"""
-    <header class="navbar px-4 sm:px-6 lg:px-8">
+    <header class="navbar bg-base-100 shadow-sm border-b border-base-300 px-4 sm:px-6 lg:px-8 fixed top-0 left-0 right-0 z-50">
       <div class="flex-1">
         <a href="/" class="flex-1 flex w-fit items-center gap-2">
           <img src={~p"/images/logo.svg"} width="36" />
@@ -53,16 +57,47 @@ defmodule BookWeb.Layouts do
           <li>
             <.theme_toggle />
           </li>
-          <li>
-            <a href="https://hexdocs.pm/phoenix/overview.html" class="btn btn-primary">
-              Get Started <span aria-hidden="true">&rarr;</span>
-            </a>
-          </li>
+
+          <%= if @current_user do %>
+            <li class="dropdown dropdown-end">
+              <div tabindex="0" role="button" class="btn btn-ghost">
+                <div class="avatar placeholder">
+                  <div class="bg-neutral text-neutral-content rounded-full w-8">
+                    <span class="text-xs">{String.first(to_string(@current_user.email))}</span>
+                  </div>
+                </div>
+                <span class="ml-2">{to_string(@current_user.email)}</span>
+                <.icon name="hero-chevron-down" class="w-4 h-4 ml-1" />
+              </div>
+              <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                <li><a href="/profile" class="flex items-center">
+                  <.icon name="hero-user" class="w-4 h-4 mr-2" />
+                  Profile
+                </a></li>
+                <li><a href="/settings" class="flex items-center">
+                  <.icon name="hero-cog-6-tooth" class="w-4 h-4 mr-2" />
+                  Settings
+                </a></li>
+                <li class="divider"></li>
+                <li><a href="/sign-out" class="flex items-center text-error">
+                  <.icon name="hero-arrow-right-on-rectangle" class="w-4 h-4 mr-2" />
+                  Sign Out
+                </a></li>
+              </ul>
+            </li>
+          <% else %>
+            <li>
+              <a href="/sign-in" class="btn btn-ghost">Sign In</a>
+            </li>
+            <li>
+              <a href="/register" class="btn btn-primary">Register</a>
+            </li>
+          <% end %>
         </ul>
       </div>
     </header>
 
-    <main class="px-4 py-20 sm:px-6 lg:px-8">
+    <main class="px-4 pt-24 pb-20 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-2xl space-y-4">
         {render_slot(@inner_block)}
       </div>

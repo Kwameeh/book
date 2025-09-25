@@ -15,7 +15,8 @@ defmodule Book.Application do
       # Start a worker by calling: Book.Worker.start_link(arg)
       # {Book.Worker, arg},
       # Start to serve requests, typically the last entry
-      BookWeb.Endpoint
+      BookWeb.Endpoint,
+      {AshAuthentication.Supervisor, [otp_app: :book]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

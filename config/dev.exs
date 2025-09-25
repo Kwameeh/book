@@ -1,8 +1,10 @@
 import Config
+config :ash, policies: [show_policy_breakdowns?: true]
 
 # Configure your database
 config :book, Book.Repo,
-  url: "postgresql://postgres.kzvckwxohgeckwraemar:Kwameeh@2000@aws-1-eu-north-1.pooler.supabase.com:6543/postgres",
+  url:
+    "postgresql://postgres.kzvckwxohgeckwraemar:Kwameeh@2000@aws-1-eu-north-1.pooler.supabase.com:6543/postgres",
   show_sensitive_data_on_connection_error: true,
   pool_size: 1
 
@@ -60,7 +62,7 @@ config :book, BookWeb.Endpoint,
   ]
 
 # Enable dev routes for dashboard and mailbox
-config :book, dev_routes: true
+config :book, dev_routes: true, token_signing_secret: "HdpeENBCbe9DnaAjhSOOvMLx8PQ+TwVl"
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :default_formatter, format: "[$level] $message\n"
