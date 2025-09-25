@@ -61,11 +61,7 @@ defmodule BookWeb.Layouts do
           <%= if @current_user do %>
             <li class="dropdown dropdown-end">
               <div tabindex="0" role="button" class="btn btn-ghost">
-                <div class="avatar placeholder">
-                  <div class="bg-neutral text-neutral-content rounded-full w-8">
-                    <span class="text-xs">{String.first(to_string(@current_user.email))}</span>
-                  </div>
-                </div>
+
                 <span class="ml-2">{to_string(@current_user.email)}</span>
                 <.icon name="hero-chevron-down" class="w-4 h-4 ml-1" />
               </div>
