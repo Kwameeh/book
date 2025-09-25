@@ -292,6 +292,14 @@ defmodule Book.Accounts.User do
       sensitive? true
     end
 
+    attribute :role, :atom do
+      constraints one_of: [:member, :librarian, :admin]
+
+      default :member
+
+      allow_nil? false
+    end
+
     attribute :confirmed_at, :utc_datetime_usec
   end
 
