@@ -51,7 +51,7 @@ config :spark,
 config :book,
   ecto_repos: [Book.Repo],
   generators: [timestamp_type: :utc_datetime, binary_id: true],
-  ash_domains: [Book.Accounts]
+  ash_domains: [Book.Inventory, Book.Accounts]
 
 # Configures the endpoint
 config :book, BookWeb.Endpoint,
